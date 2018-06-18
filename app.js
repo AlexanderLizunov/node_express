@@ -4,20 +4,55 @@ var mongoose = require('mongoose');
 var app = express()
 
 Genre = require('./models/genres');
-Book = require('./models/book');
+AvailableMenu = require('./models/availableMenu');
 
 app.use(bodyParser.json())
 
-mongoose.connect('mongodb://localhost/bookstore', function (err, client) {
+mongoose.connect('mongodb://localhost/orderDb', function (err, client) {
     console.log("Connected successfully to server");
 });
 
+
 var db = mongoose.connection
-// console.log(db)
+console.log(db)
 app.get('/', function (req, res) {
     // res.send('hello0 world')
     res.send('Please use /api/books or /api/asdas')
 });
+
+app.post('/api/availableMenu', function (req, res) {
+    // res.send('hello0 world')
+    var menu= req.body;
+    // res.send(menu)
+    console.log(JSON.stringify(menu))
+    try{
+    AvailableMenu.addAvailableMenu(menu, function(err, menu) {
+        if (err) {
+            console.log(err)
+            throw err;
+        }
+        res.json(menu)
+    })
+
+    }catch(e)
+    {
+        console.log(e)
+    }
+});
+
+app.get('/api/availableMenu', function (req, res) {
+    // res.send('hello0 world')
+    AvailableMenu.getAvailableMenu(function (err, menu) {
+        if (err) {
+            throw err;
+        }
+        res.json(menu)
+    })
+});
+
+
+
+
 
 app.get('/api/genres', function (req, res) {
     // res.send('hello0 world')
@@ -56,15 +91,7 @@ app.put('/api/genres/:_id', function (req, res) {
 });
 
 
-app.get('/api/books', function (req, res) {
-    // res.send('hello0 world')
-    Book.getBooks(function (err, books) {
-        if (err) {
-            throw err;
-        }
-        res.json(books)
-    })
-});
+
 
 app.get('/api/books/:_id', function (req, res) {
     console.log('booksearbyid')
@@ -76,17 +103,7 @@ app.get('/api/books/:_id', function (req, res) {
     })
 });
 
-app.post('/api/books', function (req, res) {
-    // res.send('hello0 world')
-    var book= req.body;
-    Book.addBook(book, function(err, book) {
-        if (err) {
-            console.log(err)
-            throw err;
-        }
-        res.json(book)
-    })
-});
+
 
 app.put('/api/books/:_id', function (req, res) {
     var id = req.params._id
@@ -125,7 +142,7 @@ app.delete('/api/books/:_id', function (req, res) {
 
 
 // app.listen(8080);
-app.listen(3000, function () {
+app.listen(5000, function () {
     console.log('API app started')
 })
 // console.log('running on port 3000')
