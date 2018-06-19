@@ -7,6 +7,12 @@ Genre = require('./models/genres');
 AvailableMenu = require('./models/availableMenu');
 
 app.use(bodyParser.json())
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
+    next()
+})
 
 mongoose.connect('mongodb://localhost/orderDb', function (err, client) {
     console.log("Connected successfully to server");
@@ -15,33 +21,90 @@ mongoose.connect('mongodb://localhost/orderDb', function (err, client) {
 
 var db = mongoose.connection
 console.log(db)
+
 app.get('/', function (req, res) {
     // res.send('hello0 world')
+
+
     res.send('Please use /api/books or /api/asdas')
+});
+
+
+
+app.get('/api/availableMenu/:date', function (req, res) {
+    const date = req.params.date
+    console.log(date)
+    console.log(req)
+    AvailableMenu.getAvailableMenuByDate(date,function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+
+
+app.put('/api/availableMenu/:date', function (req, res) {
+    const date = req.params.date
+    const menu= req.body;
+    console.log(date)
+    AvailableMenu.updateMenu(date,menu,{}, function(err, response) {
+        if (err) {
+            console.log(err)
+            throw err;
+        }else if(response===null){
+            AvailableMenu.addAvailableMenu(req.body, function(err, menu) {
+                console.log('new')
+                console.log(menu)
+                if (err) {
+                    console.log(err)
+
+
+                    throw err;
+                }
+
+                res.json(menu)
+            })
+        console.log(menu)
+        }
+        res.json(menu)
+    })
 });
 
 app.post('/api/availableMenu', function (req, res) {
     // res.send('hello0 world')
     var menu= req.body;
     // res.send(menu)
+    console.log("priletelo")
+    console.log(menu)
+
     console.log(JSON.stringify(menu))
+
     try{
     AvailableMenu.addAvailableMenu(menu, function(err, menu) {
+        console.log('new')
+        console.log(menu)
         if (err) {
             console.log(err)
             throw err;
         }
+
         res.json(menu)
     })
 
     }catch(e)
     {
+
         console.log(e)
     }
 });
 
 app.get('/api/availableMenu', function (req, res) {
     // res.send('hello0 world')
+    console.log(req)
     AvailableMenu.getAvailableMenu(function (err, menu) {
         if (err) {
             throw err;
@@ -88,6 +151,7 @@ app.put('/api/genres/:_id', function (req, res) {
         console.log(genre)
         res.json(genre)
     })
+
 });
 
 
@@ -105,18 +169,7 @@ app.get('/api/books/:_id', function (req, res) {
 
 
 
-app.put('/api/books/:_id', function (req, res) {
-    var id = req.params._id
-    var book= req.body;
-    Book.updateBook(id,book,{}, function(err, book) {
-        if (err) {
-            console.log(err)
-            throw err;
-        }
-        console.log(book)
-        res.json(book)
-    })
-});
+
 
 app.delete('/api/genres/:_id', function (req, res) {
     var id = req.params._id

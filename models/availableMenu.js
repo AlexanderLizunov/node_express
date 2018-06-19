@@ -1,25 +1,231 @@
 var mongoose = require('mongoose');
 
-var AvailableMenuSchema = mongoose.Schema([
+
+var AvailableMenuSchema = mongoose.Schema(
     {
         date: {
             type: String,
-            required: true
+            required: false
         },
-        availableMenu: [{
-            title: {
-                type: String,
-                required: true
-            },
-            avatar: {
-                type: String,
-                required: true
-            }
-        }]
+        availableMenu: [
+            [
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                }
+            ],
+            [
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                }
+            ],
+            [
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                }
+            ],
+            [
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                },
+                {
+                    title: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    },
+                    image: {
+                        _id: false,
+                        type: String,
+                        required: false
+                    }
+                }
+            ]
+        ]
     }
-])
+)
+
+// var widgetSchema = new Schema({ ... attributes ... }, { versionKey: false });
 
 var AvailableMenu = module.exports = mongoose.model('AvailableMenu', AvailableMenuSchema)
+
+
+module.exports.updateMenu = function (date, menu, options, callback) {
+    var query = {date: date};
+    var update = {
+        availableMenu: menu.availableMenu
+    }
+    AvailableMenu.findOneAndUpdate(query, update, options, callback)
+}
+
+
 
 module.exports.addAvailableMenu = function (Menu, callback) {
 
@@ -33,8 +239,11 @@ module.exports.getAvailableMenu = function (callback, limit) {
 };
 
 
+module.exports.getAvailableMenuByDate = function (date, callback) {
+    // console.log(date)
 
-
+    AvailableMenu.findOne({date: date}, callback)
+};
 
 
 module.exports.getBookById = function (id, callback) {
@@ -42,13 +251,6 @@ module.exports.getBookById = function (id, callback) {
 }
 
 
-module.exports.updateBook = function (id, book, options, callback) {
-    var query = {_id: id};
-    var update = {
-        name: book.name
-    }
-    AvailableMenu.findOneAndUpdate(query, update, options, callback)
-}
 
 //Delete AvailableMenu
 module.exports.removeBook = function (id, callback) {
