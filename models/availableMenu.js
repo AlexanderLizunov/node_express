@@ -240,7 +240,7 @@ module.exports.getAvailableMenu = function (callback, limit) {
 
 
 module.exports.getAvailableMenuByDate = function (date, callback) {
-    // console.log(date)
+    console.log(date)
 
     AvailableMenu.findOne({date: date}, callback)
 };
@@ -255,5 +255,6 @@ module.exports.getBookById = function (id, callback) {
 //Delete AvailableMenu
 module.exports.removeBook = function (id, callback) {
     var query = {_id: id};
+
     AvailableMenu.remove(query, callback)
 }

@@ -3,10 +3,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express()
 
-Genre = require('./models/genres');
+const CircularJSON = require('circular-json');
+
+OrderStore = require('./models/orderStore');
 AvailableMenu = require('./models/availableMenu');
 
+
+
 app.use(bodyParser.json())
+// app.use(CircularJSON())
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
@@ -18,18 +23,16 @@ mongoose.connect('mongodb://localhost/orderDb', function (err, client) {
     console.log("Connected successfully to server");
 });
 
-
 var db = mongoose.connection
 console.log(db)
 
 app.get('/', function (req, res) {
-    // res.send('hello0 world')
-
-
-    res.send('Please use /api/books or /api/asdas')
+    res.send('NOTHING HERE')
+    // res.send('Please use /api/books or /api/asdas')
 });
 
 
+// available Menu Requests
 
 app.get('/api/availableMenu/:date', function (req, res) {
     const date = req.params.date
@@ -85,8 +88,8 @@ app.post('/api/availableMenu', function (req, res) {
 
     try{
     AvailableMenu.addAvailableMenu(menu, function(err, menu) {
-        console.log('new')
-        console.log(menu)
+        // console.log('new')
+        // console.log(menu)
         if (err) {
             console.log(err)
             throw err;
@@ -115,87 +118,101 @@ app.get('/api/availableMenu', function (req, res) {
 
 
 
+// OrderStore requests
+// Do I NEED POST?
 
-
-app.get('/api/genres', function (req, res) {
+app.post('/api/orderStore', function (req, res) {
     // res.send('hello0 world')
-    Genre.getGenres(function (err, genres) {
-        if (err) {
-            throw err;
-        }
-        res.json(genres)
-    })
+    var order= req.body;
+    // console.log("priletelo")
+    // console.log(order)
+    //
+    // console.log(JSON.stringify(order))
+
+
+    try{
+        OrderStore.addOrder(order, function(err, order) {
+            // console.log('new')
+            // console.log(order)
+            if (err) {
+                // console.log(err)
+                throw err;
+            }
+            res.json(order)
+        })
+    }catch(e)
+    {
+        console.log(e)
+    }
 });
 
+app.put('/api/orderStore/:email', function (req, res) {
+    // const date = req.params.date
+    const email = req.params.email
+    const order= req.body;
+    const today = new Date(),
+        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    // res.json(req.body)
+    console.log(date)
 
-app.post('/api/genres', function (req, res) {
-    // res.send('hello0 world')
-    var genre= req.body;
-    Genre.addGenre(genre, function(err, genre) {
+    // console.log(email)
+    OrderStore.updateOrder(date,email,order,{}, function(err, response) {
+        console.log("UPDATE RESPONSE")
+        console.log(response)
         if (err) {
+
+
+            console.log("ОШИБКА")
+
             console.log(err)
+
             throw err;
+        }else if(response===null){
+            console.log("IF NULL")
+            console.log(req.body)
+            OrderStore.addOrder(req.body, function(err, order) {
+                console.log('new ')
+                console.log(order)
+                if (err) {
+                    console.log(err)
+                    // throw err;
+                }
+
+                res.json(order)
+            })
+            console.log(order)
         }
-        res.json(genre)
+
+        res.json(order)
     })
 });
 
-app.put('/api/genres/:_id', function (req, res) {
-    var id = req.params._id
-    var genre= req.body;
-    Genre.updateGenre(id,genre,{}, function(err, genre) {
+
+app.get('/api/orderStore/:email', function (req, res) {
+    const email = req.params.email
+    try{
+    OrderStore.getOrderListByEmail(email, (err, docs)=> {
         if (err) {
-            console.log(err)
             throw err;
         }
-        console.log(genre)
-        res.json(genre)
+        console.log(email)
+        console.log(docs)
+        res.json(docs)
     })
+    // console.log(docs)
+    // res.json(res)
+    // res.json(res)
+    }catch(e)
+    {
+        console.log(e)
+    }
 
 });
 
 
 
-
-app.get('/api/books/:_id', function (req, res) {
-    console.log('booksearbyid')
-    Book.getBookById(req.params._id, function (err, book) {
-        if (err) {
-            throw err;
-        }
-        res.json(book)
-    })
-});
-
-
-
-
-
-app.delete('/api/genres/:_id', function (req, res) {
-    var id = req.params._id
-    Genre.removeGenre(id, function(err, genre) {
-        if (err) {
-            console.log(err)
-            throw err;
-        }
-        res.json(genre)
-    })
-});
-
-app.delete('/api/books/:_id', function (req, res) {
-    var id = req.params._id
-    Book.removeBook(id, function(err, genre) {
-        if (err) {
-            console.log(err)
-            throw err;
-        }
-        res.json(genre)
-    })
-});
-
-
-// app.listen(8080);
 app.listen(5000, function () {
     console.log('API app started')
 })
-// console.log('running on port 3000')
+
+
