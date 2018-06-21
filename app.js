@@ -7,15 +7,14 @@ const CircularJSON = require('circular-json');
 
 OrderStore = require('./models/orderStore');
 AvailableMenu = require('./models/availableMenu');
-
-
+Users = require('./models/users');
 
 app.use(bodyParser.json())
-// app.use(CircularJSON())
+
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-    res.header('Access-Control-Allow-Headers','*'   ); // add remove headers according to your needs
+    res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
     next()
 })
 
@@ -23,8 +22,9 @@ mongoose.connect('mongodb://localhost/orderDb', function (err, client) {
     console.log("Connected successfully to server");
 });
 
+
 var db = mongoose.connection
-console.log(db)
+// console.log(db)
 
 app.get('/', function (req, res) {
     res.send('NOTHING HERE')
@@ -32,13 +32,51 @@ app.get('/', function (req, res) {
 });
 
 
-// available Menu Requests
+//Users actions
 
-app.get('/api/availableMenu/:date', function (req, res) {
-    const date = req.params.date
-    console.log(date)
+// app.put
+
+app.post('/api/users', function (req, res) {
+    var user = req.body;
+    // res.send(menu)
+
+
+    try {
+        Users.addUsers(user, function (err, callback) {
+            // console.log('new')
+            // console.log(menu)
+            if (err) {
+                console.log(err)
+                throw err;
+            }
+
+            res.json(callback)
+        })
+
+
+    } catch (e) {
+
+        console.log(e)
+    }
+});
+
+app.get('/api/users', function (req, res) {
+    Users.getUsers(function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+app.get('/api/user/:email', function (req, res) {
+    const email = req.params.email
+    console.log(email)
     console.log(req)
-    AvailableMenu.getAvailableMenuByDate(date,function (err, docs) {
+
+    Users.getUsersByEmail(email, function (err, docs) {
         if (err) {
             throw err;
 
@@ -50,18 +88,75 @@ app.get('/api/availableMenu/:date', function (req, res) {
 
 
 
+app.get('/api/users/:id', function (req, res) {
+    const id = req.params.id
+    Users.getUsersById(id, function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+
+
+app.put('/api/users/:id', function (req, res) {
+    const id = req.params.id
+    var user = req.body;
+    Users.updateUsersBalance(id, user, function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+app.get('/api/users/validation/:id', function (req, res) {
+    const id = req.params.id
+    Users.updateUsersVerification(id,  function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+
+// available Menu Requests
+
+app.get('/api/availableMenu/:date', function (req, res) {
+    const date = req.params.date
+    console.log(date)
+    console.log(req)
+    AvailableMenu.getAvailableMenuByDate(date, function (err, docs) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(docs)
+    })
+    // res.send('Please use /api/books or /api/asdas')
+});
+
+
 app.put('/api/availableMenu/:date', function (req, res) {
     const date = req.params.date
-    const menu= req.body;
+    const menu = req.body;
     console.log(date)
-    AvailableMenu.updateMenu(date,menu,{}, function(err, response) {
+    AvailableMenu.updateMenu(date, menu, {}, function (err, response) {
         console.log("UPDATE TRY")
         console.log(response)
         if (err) {
             console.log(err)
             throw err;
-        }else if(response===null){
-            AvailableMenu.addAvailableMenu(req.body, function(err, menu) {
+        } else if (response === null) {
+            AvailableMenu.addAvailableMenu(req.body, function (err, menu) {
                 console.log('new')
                 console.log(menu)
                 if (err) {
@@ -72,7 +167,7 @@ app.put('/api/availableMenu/:date', function (req, res) {
 
                 res.json(menu)
             })
-        console.log(menu)
+            console.log(menu)
         }
         res.json(menu)
     })
@@ -80,28 +175,27 @@ app.put('/api/availableMenu/:date', function (req, res) {
 
 app.post('/api/availableMenu', function (req, res) {
     // res.send('hello0 world')
-    var menu= req.body;
+    var menu = req.body;
     // res.send(menu)
     console.log("priletelo")
     console.log(menu)
 
     console.log(JSON.stringify(menu))
 
-    try{
-    AvailableMenu.addAvailableMenu(menu, function(err, menu) {
-        // console.log('new')
-        // console.log(menu)
-        if (err) {
-            console.log(err)
-            throw err;
-        }
+    try {
+        AvailableMenu.addAvailableMenu(menu, function (err, menu) {
+            // console.log('new')
+            // console.log(menu)
+            if (err) {
+                console.log(err)
+                throw err;
+            }
 
-        res.json(menu)
-    })
+            res.json(menu)
+        })
 
 
-    }catch(e)
-    {
+    } catch (e) {
 
         console.log(e)
     }
@@ -119,21 +213,20 @@ app.get('/api/availableMenu', function (req, res) {
 });
 
 
-
 // OrderStore requests
 // Do I NEED POST?
 
 app.post('/api/orderStore', function (req, res) {
     // res.send('hello0 world')
-    var order= req.body;
+    var order = req.body;
     // console.log("priletelo")
     // console.log(order)
     //
     // console.log(JSON.stringify(order))
 
 
-    try{
-        OrderStore.addOrder(order, function(err, order) {
+    try {
+        OrderStore.addOrder(order, function (err, order) {
             // console.log('new')
             // console.log(order)
             if (err) {
@@ -142,8 +235,7 @@ app.post('/api/orderStore', function (req, res) {
             }
             res.json(order)
         })
-    }catch(e)
-    {
+    } catch (e) {
         console.log(e)
     }
 });
@@ -151,14 +243,14 @@ app.post('/api/orderStore', function (req, res) {
 app.put('/api/orderStore/:email', function (req, res) {
     // const date = req.params.date
     const email = req.params.email
-    const order= req.body;
+    const order = req.body;
     const today = new Date(),
         date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     // res.json(req.body)
     console.log(date)
 
     // console.log(email)
-    OrderStore.updateOrder(date,email,order,{}, function(err, response) {
+    OrderStore.updateOrder(date, email, order, {}, function (err, response) {
         console.log("UPDATE RESPONSE")
         console.log(response)
         if (err) {
@@ -169,10 +261,10 @@ app.put('/api/orderStore/:email', function (req, res) {
             console.log(err)
 
             throw err;
-        }else if(response===null){
+        } else if (response === null) {
             console.log("IF NULL")
             console.log(req.body)
-            OrderStore.addOrder(req.body, function(err, order) {
+            OrderStore.addOrder(req.body, function (err, order) {
                 console.log('new ')
                 console.log(order)
                 if (err) {
@@ -192,25 +284,23 @@ app.put('/api/orderStore/:email', function (req, res) {
 
 app.get('/api/orderStore/:email', function (req, res) {
     const email = req.params.email
-    try{
-    OrderStore.getOrderListByEmail(email, (err, docs)=> {
-        if (err) {
-            throw err;
-        }
-        console.log(email)
-        console.log(docs)
-        res.json(docs)
-    })
-    // console.log(docs)
-    // res.json(res)
-    // res.json(res)
-    }catch(e)
-    {
+    try {
+        OrderStore.getOrderListByEmail(email, (err, docs) => {
+            if (err) {
+                throw err;
+            }
+            console.log(email)
+            console.log(docs)
+            res.json(docs)
+        })
+        // console.log(docs)
+        // res.json(res)
+        // res.json(res)
+    } catch (e) {
         console.log(e)
     }
 
 });
-
 
 
 app.listen(5000, function () {
