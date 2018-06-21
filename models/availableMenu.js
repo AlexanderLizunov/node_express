@@ -218,11 +218,14 @@ var AvailableMenu = module.exports = mongoose.model('AvailableMenu', AvailableMe
 
 
 module.exports.updateMenu = function (date, menu, options, callback) {
+    console.log("UPDATE")
     var query = {date: date};
     var update = {
         availableMenu: menu.availableMenu
     }
+
     AvailableMenu.findOneAndUpdate(query, update, options, callback)
+
 }
 
 

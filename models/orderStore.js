@@ -108,4 +108,15 @@ module.exports.getOrderListByEmail =  (email, callback)=> {
     //     console.log(results);
     //     client.close();
     // })
+
+    OrderStore.find({email:email}).limit(30).sort("-date").exec(callback)
 };
+
+// find({ occupation: /host/ }).
+// where('name.last').equals('Ghost').
+// where('age').gt(17).lt(66).
+// where('likes').in(['vaporizing', 'talking']).
+// limit(10).
+// sort('-occupation').
+// select('name occupation').
+// exec(callback);

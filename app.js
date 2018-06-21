@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
+    res.header('Access-Control-Allow-Headers','*'   ); // add remove headers according to your needs
     next()
 })
 
@@ -55,6 +55,8 @@ app.put('/api/availableMenu/:date', function (req, res) {
     const menu= req.body;
     console.log(date)
     AvailableMenu.updateMenu(date,menu,{}, function(err, response) {
+        console.log("UPDATE TRY")
+        console.log(response)
         if (err) {
             console.log(err)
             throw err;
@@ -64,7 +66,6 @@ app.put('/api/availableMenu/:date', function (req, res) {
                 console.log(menu)
                 if (err) {
                     console.log(err)
-
 
                     throw err;
                 }
@@ -97,6 +98,7 @@ app.post('/api/availableMenu', function (req, res) {
 
         res.json(menu)
     })
+
 
     }catch(e)
     {
