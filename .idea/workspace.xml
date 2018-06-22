@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fd5f2faa-1513-4020-b2a7-0d5e415802df" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/availableMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/availableMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/orderStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/orderStore.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,26 +30,29 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="235" column="18" selection-start-line="235" selection-start-column="18" selection-end-line="235" selection-end-column="18" />
+            <state relative-caret-position="261">
+              <caret line="165" column="30" selection-start-line="165" selection-start-column="30" selection-end-line="165" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderStore.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="orderStore.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/orderStore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+            <state relative-caret-position="275">
+              <caret line="88" column="3" selection-start-line="88" selection-start-column="3" selection-end-line="88" selection-end-column="3" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="availableMenu.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="availableMenu.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/availableMenu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4313">
-              <caret line="227" column="52" selection-start-line="227" selection-start-column="52" selection-end-line="227" selection-end-column="52" />
+            <state relative-caret-position="-34">
+              <caret line="232" column="1" lean-forward="true" selection-start-line="232" selection-start-column="1" selection-end-line="232" selection-end-column="1" />
+              <folding>
+                <element signature="e#191#6201#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,8 +98,8 @@
         <option value="$PROJECT_DIR$/actions/availableMenu.js" />
         <option value="$PROJECT_DIR$/models/users.js" />
         <option value="$PROJECT_DIR$/models/orderStore.js" />
-        <option value="$PROJECT_DIR$/models/availableMenu.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/models/availableMenu.js" />
       </list>
     </option>
   </component>
@@ -117,10 +120,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="732" />
-    <option name="y" value="24" />
-    <option name="width" value="1188" />
-    <option name="height" value="1056" />
+    <option name="x" value="261" />
+    <option name="y" value="4" />
+    <option name="width" value="1186" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -183,17 +186,17 @@
       <workItem from="1529498880751" duration="6740000" />
       <workItem from="1529558812809" duration="14544000" />
       <workItem from="1529645244363" duration="7495000" />
-      <workItem from="1529661186669" duration="1429000" />
+      <workItem from="1529661186669" duration="9247000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92523000" />
+    <option name="totallyTimeSpent" value="100341000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17194323" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17194323" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -201,7 +204,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.4144806" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.2864638" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -238,6 +241,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4313">
           <caret line="227" column="52" selection-start-line="227" selection-start-column="52" selection-end-line="227" selection-end-column="52" />
+          <folding>
+            <element signature="e#191#6201#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -497,13 +503,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/actions/availableMenu.js" />
-    <entry file="file://$PROJECT_DIR$/models/availableMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4313">
-          <caret line="227" column="52" selection-start-line="227" selection-start-column="52" selection-end-line="227" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -511,17 +510,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/models/orderStore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="235" column="18" selection-start-line="235" selection-start-column="18" selection-end-line="235" selection-end-column="18" />
+        <state relative-caret-position="275">
+          <caret line="88" column="3" selection-start-line="88" selection-start-column="3" selection-end-line="88" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/orderStore.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
+        <state relative-caret-position="261">
+          <caret line="165" column="30" selection-start-line="165" selection-start-column="30" selection-end-line="165" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/availableMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="232" column="1" lean-forward="true" selection-start-line="232" selection-start-column="1" selection-end-line="232" selection-end-column="1" />
+          <folding>
+            <element signature="e#191#6201#0" />
+          </folding>
         </state>
       </provider>
     </entry>

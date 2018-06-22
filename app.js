@@ -100,6 +100,9 @@ app.get('/api/users/:id', function (req, res) {
 app.put('/api/users/:id', function (req, res) {
     const id = req.params.id
     let user = req.body;
+    console.log(user);
+    console.log(id);
+
     Users.updateUsersBalance(id, user, function (err, docs) {
         if (err) {
             throw err;
@@ -115,6 +118,7 @@ app.get('/api/users/validation/:id', function (req, res) {
     Users.updateUsersVerification(id, function (err, docs) {
         if (err) {
             throw err;
+
 
         }
         res.json(docs)
@@ -145,7 +149,6 @@ app.put('/api/availableMenu/:date', function (req, res) {
     const menu = req.body;
     console.log(date)
     AvailableMenu.updateMenu(date, menu, {}, function (err, response) {
-        console.log("UPDATE TRY")
         console.log(response)
         if (err) {
             console.log(err)
@@ -156,33 +159,51 @@ app.put('/api/availableMenu/:date', function (req, res) {
     })
 });
 
-app.post('/api/availableMenu', function (req, res) {
-    // res.send('hello0 world')
-    var menu = req.body;
-    // res.send(menu)
-    console.log("priletelo")
-    console.log(menu)
-
-    console.log(JSON.stringify(menu))
-
-    try {
-        AvailableMenu.addAvailableMenu(menu, function (err, menu) {
-            // console.log('new')
-            // console.log(menu)
-            if (err) {
-                console.log(err)
-                throw err;
-            }
-
-            res.json(menu)
-        })
-
-
-    } catch (e) {
-
-        console.log(e)
-    }
+app.put('/api/availableMenu/status/:date', function (req, res) {
+    const date = req.params.date
+    const menu = req.body;
+    console.log(date)
+    AvailableMenu.updateMenuStatus(date, menu, {}, function (err, response) {
+        console.log(response)
+        if (err) {
+            console.log(err)
+            throw err;
+        } else {
+            res.json(response)
+        }
+    })
 });
+
+
+
+//
+// app.post('/api/availableMenu', function (req, res) {
+//     // res.send('hello0 world')
+//     var menu = req.body;
+//     // res.send(menu)
+//     console.log("priletelo")
+//     console.log(menu)
+//
+//     console.log(JSON.stringify(menu))
+//
+//     try {
+//         AvailableMenu.addAvailableMenu(menu, function (err, menu) {
+//             // console.log('new')
+//             // console.log(menu)
+//             if (err) {
+//                 console.log(err)
+//                 throw err;
+//             }
+//
+//             res.json(menu)
+//         })
+//
+//
+//     } catch (e) {
+//
+//         console.log(e)
+//     }
+// });
 
 app.get('/api/availableMenu', function (req, res) {
     // res.send('hello0 world')
@@ -255,7 +276,7 @@ app.put('/api/orderStore/:email', function (req, res) {
 });
 
 
-app.get('/api/orderStore/:email', function (req, res) {
+app.get('/api/orderStore/:email',  (req, res)=> {
     const email = req.params.email
     try {
         OrderStore.getOrderListByEmail(email, (err, docs) => {
@@ -263,6 +284,26 @@ app.get('/api/orderStore/:email', function (req, res) {
                 throw err;
             }
             console.log(email)
+            console.log(docs)
+            res.json(docs)
+        })
+        // console.log(docs)
+        // res.json(res)
+        // res.json(res)
+    } catch (e) {
+        console.log(e)
+    }
+
+});
+
+app.get('/api/orders/:date', function (req, res) {
+    const date = req.params.date
+    try {
+        OrderStore.getOrderListByDate(date, (err, docs) => {
+            if (err) {
+                throw err;
+            }
+            console.log(date)
             console.log(docs)
             res.json(docs)
         })

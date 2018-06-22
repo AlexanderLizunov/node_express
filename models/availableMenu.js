@@ -208,7 +208,10 @@ var AvailableMenuSchema = mongoose.Schema(
                     }
                 }
             ]
-        ]
+        ],
+        ordering: {
+            type: String
+        }
     }
 )
 
@@ -222,6 +225,18 @@ module.exports.updateMenu = function (date, menu, options, callback) {
     var query = {date: date};
     var update = {
         availableMenu: menu.availableMenu
+    }
+
+
+    AvailableMenu.findOneAndUpdate(query, update, { upsert: true }, callback)
+
+}
+
+module.exports.updateMenuStatus = function (date, menu, options, callback) {
+    console.log("STATUS UPDATE")
+    var query = {date: date};
+    var update = {
+        ordering: menu.ordering
     }
 
 
@@ -249,16 +264,3 @@ module.exports.getAvailableMenuByDate = function (date, callback) {
     AvailableMenu.findOne({date: date}, callback)
 };
 
-
-module.exports.getBookById = function (id, callback) {
-    AvailableMenu.findById(id, callback);
-}
-
-
-
-//Delete AvailableMenu
-module.exports.removeBook = function (id, callback) {
-    var query = {_id: id};
-
-    AvailableMenu.remove(query, callback)
-}

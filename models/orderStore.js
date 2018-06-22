@@ -84,3 +84,12 @@ module.exports.getOrderListByEmail =  (email, callback)=> {
 
     OrderStore.find({email:email}).limit(30).sort("-date").exec(callback)
 };
+
+
+module.exports.getOrderListByDate =  (date, callback)=> {
+    console.log(date)
+    // OrderStore.find().where("email", email)
+    // OrderStore.find({email: email})
+
+    OrderStore.find({date:date}).exec(callback)
+};
