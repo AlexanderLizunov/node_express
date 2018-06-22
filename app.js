@@ -38,9 +38,6 @@ app.get('/', function (req, res) {
 
 app.post('/api/users', function (req, res) {
     var user = req.body;
-    // res.send(menu)
-
-
     try {
         Users.addUsers(user, function (err, callback) {
             // console.log('new')
@@ -87,7 +84,6 @@ app.get('/api/user/:email', function (req, res) {
 });
 
 
-
 app.get('/api/users/:id', function (req, res) {
     const id = req.params.id
     Users.getUsersById(id, function (err, docs) {
@@ -101,10 +97,9 @@ app.get('/api/users/:id', function (req, res) {
 });
 
 
-
 app.put('/api/users/:id', function (req, res) {
     const id = req.params.id
-    var user = req.body;
+    let user = req.body;
     Users.updateUsersBalance(id, user, function (err, docs) {
         if (err) {
             throw err;
@@ -117,7 +112,7 @@ app.put('/api/users/:id', function (req, res) {
 
 app.get('/api/users/validation/:id', function (req, res) {
     const id = req.params.id
-    Users.updateUsersVerification(id,  function (err, docs) {
+    Users.updateUsersVerification(id, function (err, docs) {
         if (err) {
             throw err;
 
@@ -155,21 +150,9 @@ app.put('/api/availableMenu/:date', function (req, res) {
         if (err) {
             console.log(err)
             throw err;
-        } else if (response === null) {
-            AvailableMenu.addAvailableMenu(req.body, function (err, menu) {
-                console.log('new')
-                console.log(menu)
-                if (err) {
-                    console.log(err)
-
-                    throw err;
-                }
-
-                res.json(menu)
-            })
-            console.log(menu)
+        } else {
+            res.json(response)
         }
-        res.json(menu)
     })
 });
 
@@ -250,7 +233,7 @@ app.put('/api/orderStore/:email', function (req, res) {
     console.log(date)
 
     // console.log(email)
-    OrderStore.updateOrder(date, email, order, {}, function (err, response) {
+    OrderStore.updateOrder(date, email, order, {upsert: true }, function (err, response) {
         console.log("UPDATE RESPONSE")
         console.log(response)
         if (err) {
@@ -261,24 +244,14 @@ app.put('/api/orderStore/:email', function (req, res) {
             console.log(err)
 
             throw err;
-        } else if (response === null) {
-            console.log("IF NULL")
-            console.log(req.body)
-            OrderStore.addOrder(req.body, function (err, order) {
-                console.log('new ')
-                console.log(order)
-                if (err) {
-                    console.log(err)
-                    // throw err;
-                }
+        } else {
 
-                res.json(order)
-            })
+            res.json(order)
             console.log(order)
         }
-
-        res.json(order)
     })
+
+
 });
 
 

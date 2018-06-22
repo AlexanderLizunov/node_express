@@ -224,7 +224,8 @@ module.exports.updateMenu = function (date, menu, options, callback) {
         availableMenu: menu.availableMenu
     }
 
-    AvailableMenu.findOneAndUpdate(query, update, options, callback)
+
+    AvailableMenu.findOneAndUpdate(query, update, { upsert: true }, callback)
 
 }
 
