@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var usersSchema = mongoose.Schema({
+const usersSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
@@ -13,28 +13,34 @@ var usersSchema = mongoose.Schema({
     },
     emailVerified: {
         type: Boolean
-    }
+    },
+    token: {
+        type: String
+    },
+
+
 })
 
-var Users = module.exports = mongoose.model('users', usersSchema)
+const Users = module.exports = mongoose.model('users', usersSchema)
 
 //add users
+
 module.exports.addUsers = function (user, callback) {
     Users.create(user, callback)
 }
-
-
 
 //get genres
 
 module.exports.getUsers = function (callback, limit) {
     Users.find(callback).limit(limit)
 }
-//
 
 module.exports.getUsersById = function (id, callback){
-
     Users.findById(id).exec(callback);
+}
+
+module.exports.getUserEmail = function (id, callback){
+    Users.findOne(id).exec(callback);
 }
 
 module.exports.getUsersByEmail = function (email, callback) {
@@ -43,19 +49,15 @@ module.exports.getUsersByEmail = function (email, callback) {
 
 //Update User
 module.exports.updateUsersBalance = function (id, user, options, callback) {
-    var update = {
+    let update = {
         balance: user.balance,
     }
-
-    // Model.findByIdAndUpdate
     Users.findByIdAndUpdate(id, update, options, callback)
 }
 
-module.exports.updateUsersVerification = function (id,  options, callback) {
-    var update = {
-        emailVerified: true
+module.exports.updateUsersVerification = function (email, callback) {
+    let update = {
+        emailVerified: "true"
     }
-
-    // Model.findByIdAndUpdate
-    Users.findByIdAndUpdate(id, update, options, callback)
+    Users.findOneAndUpdate({email}, update, {}, callback)
 }

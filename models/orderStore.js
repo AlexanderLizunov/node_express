@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
 
-var orderStoreSchema = mongoose.Schema(
+let orderStoreSchema = mongoose.Schema(
     {
         date: {
             type: String,
@@ -51,45 +51,35 @@ var orderStoreSchema = mongoose.Schema(
     }
 )
 
-
-var OrderStore = module.exports = mongoose.model('orderstore', orderStoreSchema)
+let OrderStore = module.exports = mongoose.model('orderstore', orderStoreSchema)
 
 
 module.exports.updateOrder = function (date, email, order, options, callback) {
-
-
-    var query = {date: date, email:email };
-    var update = {
+    let query = {date: date, email:email };
+    let update = {
         orderNumber: order.orderNumber,
         order: order.order
     }
-
-    console.log("QUERY")
-
-    console.log(query)
     OrderStore.findOneAndUpdate(query, update, options, callback)
 }
 
-
 module.exports.addOrder = function (order, callback) {
-
     OrderStore.create(order, callback)
-
 }
 
 module.exports.getOrderListByEmail =  (email, callback)=> {
     console.log(email)
-    // OrderStore.find().where("email", email)
-    // OrderStore.find({email: email})
-
     OrderStore.find({email:email}).limit(30).sort("-date").exec(callback)
 };
 
+module.exports.getCurrentOrderByEmail =  (email, callback)=> {
+    const today = new Date(),
+        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    console.log(email)
+    OrderStore.findOne({email:email, date: date}).exec(callback)
+};
 
 module.exports.getOrderListByDate =  (date, callback)=> {
     console.log(date)
-    // OrderStore.find().where("email", email)
-    // OrderStore.find({email: email})
-
     OrderStore.find({date:date}).exec(callback)
 };
